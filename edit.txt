@@ -1,0 +1,109 @@
+import React, { useEffect, useState } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import "./EditProfile.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const EditProfile = () => {
+  const token = sessionStorage.getItem("token");
+  const [data, setData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+  });
+
+  useEffect( () => {
+     axios
+      .get(`${process.env.REACT_APP_PORT_URL}/users`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        setData({
+          ...data,
+          firstname: res.data.user.firstname,
+          lastname: res.data.user.lastname,
+          email: res.data.user.email,
+          phone: res.data.user.phone,
+          
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+
+  return (
+    <div>
+      <Header />
+      <div className="container">
+        <div className="row">
+          <div className="col-4">
+            <ul className="edit-list">
+              <li>Account</li>
+              <li>Overview</li>
+              <li>
+                <Link to={"/order-return"} className="order_return">
+                  Orders & Returns
+                </Link>
+              </li>
+              <li>Coupons</li>
+            </ul>
+          </div>
+          <div className="col-8 edit">
+            <h4>Edit Details</h4>
+            <form>
+              <div className="form-group">
+                <label className="form-label">First name</label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={data.firstname}
+                  className="form-control edit-input"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Last name</label>
+                <input
+                  type="text"
+                  name="lastname"
+                  value={data.lastname}
+                  className="form-control edit-input"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={data.email}
+                  className="form-control edit-input"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Phone</label>
+                <input
+                  type="number"
+                  name="phone"
+                  value={data.phone}
+                  className="form-control edit-input"
+                />
+              </div>
+
+              <button type="submit" className="editbtn">
+                Save Details
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default EditProfile;
