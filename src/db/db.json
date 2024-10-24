@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "a757",
+      "username": "admin",
+      "email": "admin@gmail.com",
+      "password": "1234",
+      "name": "Admin Support",
+      "phone": "25678654454"
+    },
+    {
+      "id": "87c7",
+      "username": "asmPeter",
+      "email": "sam@gmail.com",
+      "password": "hdshj8787hjdshjd",
+      "name": "dsdds",
+      "mobile": "444343re"
+    }
+  ]
+}
